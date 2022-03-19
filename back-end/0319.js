@@ -86,9 +86,6 @@ function checkacc(user,dspubkey,require_data){
 
 }
 
-function getjwt(check_acc_result,dspubkey,user){
-
-}
 
 let x = createmember('Brad',123);
 let y = createmember('mark',24232);
