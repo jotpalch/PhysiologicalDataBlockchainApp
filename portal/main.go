@@ -1,17 +1,18 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
-    "github.com/gin-gonic/gin"
-    "net/http"
-	"context"
-    "time"
+	"net/http"
+	"time"
 
-    "go.mongodb.org/mongo-driver/mongo"
+	"github.com/gin-gonic/gin"
+
 	"go.mongodb.org/mongo-driver/bson"
-    "go.mongodb.org/mongo-driver/mongo/options"
-    // "go.mongodb.org/mongo-driver/mongo/readpref"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	// "go.mongodb.org/mongo-driver/mongo/readpref"
 	// "gopls"
 )
 
@@ -21,24 +22,23 @@ type IndexData struct {
 }
 
 type data struct {
-	DID_Public_Key     string    `json:"DID_Public_Key"`
-	Blood_Oxygen       string    `json:"Blood_Oxygen"`
-	Blood_Pressure     string    `json:"Blood_Pressure"`
-	Body_Temperature   string    `json:"Body_Temperature"`
-	Step_Counts        string    `json:"Step_Counts"`
-	Heart_Beats 	   string 	 `json:"Heart_Beats"`
-	Time_Stamp  	   string    `json:"Time_Stamp"`
+	DID_Public_Key   string `json:"DID_Public_Key"`
+	Blood_Oxygen     string `json:"Blood_Oxygen"`
+	Blood_Pressure   string `json:"Blood_Pressure"`
+	Body_Temperature string `json:"Body_Temperature"`
+	Step_Counts      string `json:"Step_Counts"`
+	Heart_Beats      string `json:"Heart_Beats"`
+	Time_Stamp       string `json:"Time_Stamp"`
 }
 
-
-func test(c *gin.Context) {
+func root(c *gin.Context) {
 	data := new(IndexData)
-	data.Title = "首頁"
-	data.Content = "我的第一個首頁"
+	data.Title = "PhysiologicalDataBlockchainApp_api"
+	data.Content = "URI / [temp, step, blood_ox, blood_ps, beats] / {publickey} "
 	c.HTML(http.StatusOK, "index.html", data)
 }
 
-func search(client *mongo.Client, col string, pk string) []*data{
+func search(client *mongo.Client, col string, pk string) []*data {
 	findOptions := options.Find()
 	findOptions.SetLimit(288)
 
@@ -59,7 +59,7 @@ func search(client *mongo.Client, col string, pk string) []*data{
 		if err != nil {
 			log.Fatal(err)
 		}
-	
+
 		Userdata = append(Userdata, &elem)
 	}
 
@@ -73,20 +73,18 @@ func main() {
 	defer cancel()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://admin:69251@ec2-34-221-6-169.us-west-2.compute.amazonaws.com:27017"))
 
-
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	// Check the connection
 	err = client.Ping(context.TODO(), nil)
-	
+
 	if err != nil {
 		log.Fatal(err)
 	}
-	
-	fmt.Println("Connected to MongoDB!")
 
+	fmt.Println("Connected to MongoDB!")
 
 	defer func() {
 		if err = client.Disconnect(ctx); err != nil {
@@ -99,57 +97,57 @@ func main() {
 	server.LoadHTMLGlob("template/*")
 
 	route(server, client)
-	
+
 	server.Run(":8877")
 }
 
-func route(server *gin.Engine, client *mongo.Client){
-	server.GET("/", test)
+func route(server *gin.Engine, client *mongo.Client) {
+	server.GET("/", root)
 
-	server.GET("/temp/:pk", temp(client) )
-	server.GET("/step/:pk", step(client) )
-	server.GET("/blood_ox/:pk", blood_ox(client) )
-	server.GET("/blood_ps/:pk", blood_ps(client) )
-	server.GET("/beats/:pk", beats(client) )
+	server.GET("/temp/:pk", temp(client))
+	server.GET("/step/:pk", step(client))
+	server.GET("/blood_ox/:pk", blood_ox(client))
+	server.GET("/blood_ps/:pk", blood_ps(client))
+	server.GET("/beats/:pk", beats(client))
 }
 
-func temp(client *mongo.Client) gin.HandlerFunc{
+func temp(client *mongo.Client) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
-        pk := c.Param("pk")
+		pk := c.Param("pk")
 		Userdata := search(client, "Body_Temperature", pk)
 		c.JSON(200, Userdata)
-    }
-    return gin.HandlerFunc(fn)
+	}
+	return gin.HandlerFunc(fn)
 }
-func step(client *mongo.Client) gin.HandlerFunc{
+func step(client *mongo.Client) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
-        pk := c.Param("pk")
+		pk := c.Param("pk")
 		Userdata := search(client, "Step_Counts", pk)
 		c.JSON(200, Userdata)
-    }
-    return gin.HandlerFunc(fn)
+	}
+	return gin.HandlerFunc(fn)
 }
-func blood_ox(client *mongo.Client) gin.HandlerFunc{
+func blood_ox(client *mongo.Client) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
-        pk := c.Param("pk")
+		pk := c.Param("pk")
 		Userdata := search(client, "Blood_Oxygen", pk)
 		c.JSON(200, Userdata)
-    }
-    return gin.HandlerFunc(fn)
+	}
+	return gin.HandlerFunc(fn)
 }
-func blood_ps(client *mongo.Client) gin.HandlerFunc{
+func blood_ps(client *mongo.Client) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
-        pk := c.Param("pk")
+		pk := c.Param("pk")
 		Userdata := search(client, "Blood_Pressure", pk)
 		c.JSON(200, Userdata)
-    }
-    return gin.HandlerFunc(fn)
+	}
+	return gin.HandlerFunc(fn)
 }
-func beats(client *mongo.Client) gin.HandlerFunc{
+func beats(client *mongo.Client) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
-        pk := c.Param("pk")
+		pk := c.Param("pk")
 		Userdata := search(client, "Heart_Beats", pk)
 		c.JSON(200, Userdata)
-    }
-    return gin.HandlerFunc(fn)
+	}
+	return gin.HandlerFunc(fn)
 }
