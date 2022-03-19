@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>form</title>
+	<style>
+		h2 { text-align: center; }
+		div { width: 400px; margin: 10px auto; }
+		label{ width: 100%; display: inline-block; }
+		input, textarea{ width: 100%; display: inline-block; }
+		#send{ margin: 40px auto 0 auto; display: block; width: 50px; }
+	</style>
+</head>
+<body>
+	<h2>註冊搂嘻嘻</h2>
+	<form id="signup" method="POST" action="http://127.0.0.1:3000/signup">
+		<div><label for="name">姓名:</label><input type="text" name="name" id="name"></div>
+		<div><label for="pubkey">公鑰:</label><input type="text" name="pubkey" id="pubkey"></div>
+		<!-- <div><label for="comment">意見:</label><textarea name="comment" id="comment" cols="30" rows="10"></textarea></div> -->
+		<input id="send" type="submit" value="送出">
+	</form>
+</body>
+</html>
