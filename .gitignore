@@ -2,5 +2,6 @@
 
 *.exe
 /node_modules
+back-end/node_modules
 # 當然你要忽略自己也可以，只是通常不會這麼做
 # .gitignore
