@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/form', function(req, res) {
-    res.sendfile('./views/form.html');
+    res.sendfile('back-end/views/form.html');
 });
 
 app.post('/signup',urlencodedParser,function(req, res) {
@@ -34,7 +34,7 @@ app.post('/signup',urlencodedParser,function(req, res) {
     let newmem = createmember(req.body.name,req.body.pubkey)
     console.log(newmem)
     //res.send(req.body.name + '謝謝你的回覆');
-    res.sendfile('signup.html');
+    res.sendfile('back-end/views/signup.html');
 });
 
 app.listen(3000, ()=>{
