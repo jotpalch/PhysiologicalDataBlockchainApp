@@ -14,18 +14,19 @@ async function main(){
         }
         
         payload = {
-            "_id": "8KkAzQcZ2fOMmnNP7TfFOqCX1OteQ56y",  //欲蒐集之使用者的publickey                           
+            "_id": "8KkAzQcZ2fOMmnNP7TfFOqCX1OteQ56y",  //欲蒐集之使用者的publickey
+            "collection_type" : ["Blood_Oxygen" , "Blood_Pressure", "Weight"]
         }
         
         // 設定密鑰
         const SECRET = 'thisismynewproject'
         // 建立 Token
-        const token = jwt.sign({ _id: payload._id.toString() }, SECRET, { expiresIn: '1 day' })
+        const token = jwt.sign({ _id: payload._id.toString(),collection_type: payload.collection_type}, SECRET, { expiresIn: '1 day' })
         console.log(token);
         //透過密鑰解碼
         const decoded = jwt.verify(token, SECRET);
         console.log(decoded);        
-        await findOneListingByid(client, decoded._id);
+        await findOneListingByid(client, decoded._id, decoded.collection_type);
     }catch(e){
         console.error(e);
     }finally{
@@ -43,15 +44,18 @@ async function listDatabases(client){
         
     });
 }
-async function findOneListingByid(client,id_list){
-    const result = await client.db("users").collection('Blood_Oxygen').findOne( { DID_Public_Key
-        : id_list });
+async function findOneListingByid(client,id_list,collection_type){
     console.log(id_list);
-    if(result){
-        console.log("i found you asshole");
-    }
-    else{
-        console.log("nono");
+    console.log(collection_type);
+    for (var i = 0; i<collection_type.length; ++i){
+        const result = await client.db("users").collection(collection_type[i]).findOne( { DID_Public_Key : id_list });
+        if(result){
+            console.log(id_list);
+            console.log(result)
+        }
+        else{
+            console.log("no",collection_type[i],"data in database");
+        }
     }
 
 }
