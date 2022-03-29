@@ -14,8 +14,8 @@ async function main(){
         }
         
         payload = {
-            "_id": "8KkAzQcZ2fOMmnNP7TfFOqCX1OteQ56y",  //欲蒐集之使用者的publickey
-            "collection_type" : ["Blood_Oxygen" , "Blood_Pressure", "Weight"]
+            "_id": "8KkAzQcZ2fOMmnNP7TfFOqCX1OteQ56y",                                  //欲蒐集之使用者的publickey
+            "collection_type" : ["Blood_Oxygen" , "Blood_Pressure", "Weight"]           //欲蒐集之資料type
         }
         
         // 設定密鑰
