@@ -1,29 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
-import Button from "@mui/material/Button";
+import "./App.css";
 
-function App() {
+import SignIn from "./Signin";
+import Dashboard from "./Dashboard";
+
+const App = () => {
   return (
-    <div className="App">
-      <Button variant="contained" color="primary">
-        Hello World
-      </Button>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      {/* <SignIn /> */}
+      <Dashboard />
     </div>
-  );
-}
+  ); 
+};
 
 export default App;
