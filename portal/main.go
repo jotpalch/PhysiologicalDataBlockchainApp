@@ -12,6 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	// "go.mongodb.org/mongo-driver/mongo/readpref"
 	// "gopls"
 )
@@ -22,13 +23,13 @@ type IndexData struct {
 }
 
 type data struct {
-	DID_Public_Key   string `json:"DID_Public_Key"`
-	Blood_Oxygen     string `json:"Blood_Oxygen"`
-	Blood_Pressure   string `json:"Blood_Pressure"`
-	Body_Temperature string `json:"Body_Temperature"`
-	Step_Counts      string `json:"Step_Counts"`
-	Heart_Beats      string `json:"Heart_Beats"`
-	Time_Stamp       string `json:"Time_Stamp"`
+	DID_Public_Key   string    `json:"DID_Public_Key"`
+	Blood_Oxygen     int       `json:"Blood_Oxygen"`
+	Blood_Pressure   int       `json:"Blood_Pressure"`
+	Body_Temperature float64   `json:"Body_Temperature"`
+	Step_Counts      int       `json:"Step_Counts"`
+	Heart_Beats      int       `json:"Heart_Beats"`
+	Time_Stamp       primitive.Timestamp `json:"Time_Stamp"`
 }
 
 func root(c *gin.Context) {
@@ -42,7 +43,7 @@ func search(client *mongo.Client, col string, pk string) []*data {
 	findOptions := options.Find()
 	findOptions.SetLimit(288)
 
-	collection := client.Database("users").Collection(col)
+	collection := client.Database("BigData").Collection(col)
 
 	var Userdata []*data
 
