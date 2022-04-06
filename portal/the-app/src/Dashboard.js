@@ -98,6 +98,7 @@ const BgImg = () => {
         left: 0,
         top: 0,
         overflow: "hidden",
+        zIndex: -99,
       }}
     >
       <Box
@@ -111,7 +112,7 @@ const BgImg = () => {
           ml: 45,
         }}
       >
-        <Typography variant="h2">
+        <Typography variant="h3">
           Physiological Data
           <br /> Authentication Blockchain App
         </Typography>
@@ -124,6 +125,33 @@ const BgImg = () => {
     </Box>
   );
 };
+
+  const type = [
+    { uri: "beats", class: "Heart_Beats" },
+    { uri: "step", class: "Step_Counts" },
+    { uri: "blood_ox", class: "Blood_Oxygen" },
+    { uri: "blood_ps", class: "Blood_Pressure" },
+    { uri: "temp", class: "Body_Temperature" },
+  ];
+
+const ShowChart = () => {
+  return type.map((t) => (
+    <Grid item xs={12}>
+      <Paper
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          height: 240,
+        }}
+      >
+        <Chart {...t} />
+      </Paper>
+    </Grid>
+  ));
+}
+
+ShowChart();
 
 const DataVis = () => {
   return (
@@ -152,7 +180,7 @@ const DataVis = () => {
                 height: 240,
               }}
             >
-              <Chart />
+              <Chart {...{ uri: "beats", class: "Heart_Beats" }} />
             </Paper>
           </Grid>
           {/* Recent Deposits */}
@@ -174,7 +202,9 @@ const DataVis = () => {
               <Orders />
             </Paper>
           </Grid>
+          {ShowChart()}
         </Grid>
+
         <Copyright sx={{ pt: 4 }} />
       </Container>
     </Box>
@@ -228,7 +258,7 @@ function DashboardContent() {
             <SignIn />
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
+        <Drawer variant="permanent" open={open} sx={{ height: "100vh" }}>
           <Toolbar
             sx={{
               display: "flex",
@@ -242,14 +272,14 @@ function DashboardContent() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List component="nav">
+          <List component="nav" sx={{ height: "100%" }}>
             {mainListItems}
             <Divider sx={{ my: 1 }} />
             {secondaryListItems}
           </List>
         </Drawer>
-        <BgImg />
-        {/* <DataVis /> */}
+        {/* <BgImg /> */}
+        <DataVis />
       </Box>
     </ThemeProvider>
   );
