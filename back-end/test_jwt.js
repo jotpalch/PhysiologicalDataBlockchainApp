@@ -11,7 +11,7 @@ app.get("/form",function(req,res){                          //Data requester輸�
     res.sendfile('back-end/views/form.html')
 });
 
-app.post('/signup',urlencodedParser,async function(req, res) {   
+app.post('/request',urlencodedParser,async function(req, res) {   
     let newmem = create_request(req.body.name,req.body.pubkey,req.body.collection_type)
     let collect_detail = newmem.collection_type;
     collect_detail_f = collect_detail.split(",");
@@ -111,6 +111,7 @@ async function CheckDataInDB(id_list,collection_type){
     }
 
 }
+
 function create_jwt(collection_type){
     Header = {
         "alg": "HS256",                              //產生簽章使用之演算法
