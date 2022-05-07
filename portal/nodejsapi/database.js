@@ -30,4 +30,11 @@ router.get("/:collection", async (req, res) => {
   res.status(200).send(result).end();
 });
 
+router.get("/:collection/:pk", async (req, res) => {
+  console.log(req.params.collection);
+  const col = db.collection(req.params.collection);
+  const result = await col.find({ DID_Public_Key: req.params.pk }).toArray();
+  res.status(200).send(result).end();
+});
+
 module.exports = router;
