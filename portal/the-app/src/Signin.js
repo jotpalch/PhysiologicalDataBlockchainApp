@@ -14,7 +14,15 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+
 const Signinpage = (props) => {
+const [acc, setAcc] = React.useState("");
+
+  const EthereumButton = async () => {
+    const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+    setAcc(accounts[0]);
+  }
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -79,6 +87,17 @@ const Signinpage = (props) => {
           >
             Sign In
           </Button>
+          <Button
+            onClick={EthereumButton}
+            fullWidth
+            variant="contained"
+            sx={{ mt: 1, mb: 2 }}
+          >
+            Connect with Metamask
+          </Button>
+          <Typography component="h2" variant="h5" color="#263238">
+            Account: <span>{acc}</span>
+          </Typography>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
