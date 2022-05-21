@@ -43,9 +43,10 @@ export default function Chart(props) {
         setLoading(false);
       });
   }, []);
+  // UseEffect的後面的 [] 用來控制上面的get只跑一次
 
   if(isLoading) {
-    return <div> loading... </div>
+    return <h2> loading... </h2>
   }
 
   return (

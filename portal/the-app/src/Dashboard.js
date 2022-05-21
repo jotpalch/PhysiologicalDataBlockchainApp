@@ -126,13 +126,13 @@ const BgImg = () => {
   );
 };
 
-  const type = [
-    { uri: "beats", class: "Heart_Beats" },
-    { uri: "step", class: "Step_Counts" },
-    { uri: "blood_ox", class: "Blood_Oxygen" },
-    { uri: "blood_ps", class: "Blood_Pressure" },
-    { uri: "temp", class: "Body_Temperature" },
-  ];
+const type = [
+  { uri: "beats", class: "Heart_Beats" },
+  { uri: "step", class: "Step_Counts" },
+  { uri: "blood_ox", class: "Blood_Oxygen" },
+  { uri: "blood_ps", class: "Blood_Pressure" },
+  { uri: "temp", class: "Body_Temperature" },
+];
 
 const ShowChart = () => {
   return type.map((t) => (
@@ -149,7 +149,7 @@ const ShowChart = () => {
       </Paper>
     </Grid>
   ));
-}
+};
 
 ShowChart();
 
@@ -171,6 +171,7 @@ const DataVis = () => {
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
           {/* Chart */}
+          {ShowChart()}
           <Grid item xs={12} md={8} lg={9}>
             <Paper
               sx={{
@@ -202,9 +203,7 @@ const DataVis = () => {
               <Orders />
             </Paper>
           </Grid>
-          {ShowChart()}
         </Grid>
-
         <Copyright sx={{ pt: 4 }} />
       </Container>
     </Box>
@@ -217,6 +216,10 @@ function DashboardContent() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+  const [wallet, setWallet] = React.useState(false);
+  const checkWallect = () => {
+    setWallet(window.ethereum.isConnected())
   };
 
   return (
@@ -255,7 +258,9 @@ function DashboardContent() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <SignIn />
+            <Box sx={{ display: wallet ? "none" : "block" }}>
+              <SignIn />
+            </Box>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open} sx={{ height: "100vh" }}>
