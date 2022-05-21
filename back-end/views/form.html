@@ -12,11 +12,12 @@
 	</style>
 </head>
 <body>
-	<h2>要求資料搂嘻嘻</h2>
+	<h2>TSP:Data Request-2</h2>
 	<form id="signup" method="POST" action="http://127.0.0.1:3000/request">
-		<div><label for="name">姓名:</label><input type="text" name="name" id="name"></div>
-		<div><label for="pubkey">使用者公鑰:</label><input type="text" name="pubkey" id="pubkey"></div>
-		<div><label for="collection_type">要求資料型態:</label><input type="text" name="collection_type" id="collection_type"></div>
+		<div><label for="name">TSP單位名稱:</label><input type="text" name="name" id="name"></div>
+		<div><label for="pubkey">TSP公鑰:</label><input type="text" name="pubkey" id="pubkey"></div>
+		<div><label for="user_pubkey_list">資料提供者之公鑰列表:</label><input type="text" name="user_pubkey_list" id ="user_pubkey_list"></div>
+		<div><label for="collection_type">要求資料屬性:</label><input type="text" name="collection_type" id="collection_type"></div>
 		<input id="send" type="submit" value="送出">
 	</form>
 </body>
