@@ -218,7 +218,8 @@ function DashboardContent() {
     setOpen(!open);
   };
   const [wallet, setWallet] = React.useState(false);
-  const checkWallect = () => {
+  const CheckWallect = () => {
+    console.log(window.ethereum.isConnected());
     setWallet(window.ethereum.isConnected())
   };
 
@@ -258,7 +259,8 @@ function DashboardContent() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <Box sx={{ display: wallet ? "none" : "block" }}>
+            {/* 登入 */}
+            <Box onClick={CheckWallect} sx={{ display: wallet ? "none" : "block" }}>
               <SignIn />
             </Box>
           </Toolbar>
