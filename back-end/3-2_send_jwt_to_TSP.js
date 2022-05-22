@@ -8,17 +8,17 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.get("/form",function(req,res){                          //Data requester輸入需要之資料型態
-    res.sendfile('views/form.html')
+    res.sendfile('views/form_for_require_jwt.html')
 });
 
 app.post('/request',urlencodedParser,async function(req, res) {   
-    let newmem = create_request(req.body.name,req.body.pubkey,req.body.user_pubkey_list,req.body.collection_type)
+    let newmem = create_request(req.body.name,req.body.pubkey,req.body.user_pubkey_list,req.body.collection_type,req.body.enterprise)
     let collect_detail = newmem.collection_type;
     let pubkey = newmem.pubkey;
     let user_pubkey_list = newmem.user_pubkey_list;
+    let enterprise = newmem.enterprise;
     collect_detail_f = collect_detail.split(",");
     user_pubkey_list_f = user_pubkey_list.split(",");
-    console.log(user_pubkey_list);
     var dataindb = new Array();
     //需改成check ACL
     for(var i = 0;i<collect_detail_f.length;++i){
@@ -27,9 +27,16 @@ app.post('/request',urlencodedParser,async function(req, res) {
     //
     let checker = arr => arr.every(v => v === true);
     if(checker(dataindb)){
-        token = create_jwt(collect_detail_f,pubkey);
-        res.sendfile('views/request_success.html')
-        res.send(token);
+        var token = create_jwt(collect_detail_f,pubkey);
+        res.send('<p id = "copy">' + token + '</p>' +  '<button type="button" onclick="copyEvent(`copy`)">Copy</button>' + 
+        '<script>' + 
+            'function copyEvent(id)' + 
+            '{' + 
+                'var str = document.getElementById(id);' + 
+                'window.getSelection().selectAllChildren(str);'+
+                'document.execCommand("Copy")'+
+            '}' + 
+        '</script>' + '<input type="button" value="Go back!" onclick="history.back()">');
     }
     else{
         res.sendfile('views/request_fail.html');
@@ -42,17 +49,18 @@ app.listen(3000,function(){
 });
 
 class request_message{
-    constructor(name,pubkey,user_pubkey_list,collection_type){
+    constructor(name,pubkey,user_pubkey_list,collection_type,enterprise){
         this.name = name;
         this.pubkey = pubkey;
         this.user_pubkey_list = user_pubkey_list;
         this.collection_type = collection_type;
+        this.enterprise = enterprise;
     }
 
 }
 
-function create_request(name,pubkey,user_pubkey_list,collection_type){
-    var a = new request_message(name,pubkey,user_pubkey_list,collection_type);
+function create_request(name,pubkey,user_pubkey_list,collection_type,enterprise){
+    var a = new request_message(name,pubkey,user_pubkey_list,collection_type,enterprise);
     return a;
 }
 
