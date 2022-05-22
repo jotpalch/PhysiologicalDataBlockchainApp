@@ -13,16 +13,20 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import MetaMaskOnboarding from "@metamask/onboarding";
+import { useDispatch, useSelector } from "react-redux";
+import { setAccount } from "./store";
 
 const Signinpage = (props) => {
-const [acc, setAcc] = React.useState("");
+  const dispatch = useDispatch();
 
   const EthereumButton = async () => {
-    const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-    setAcc(accounts[0]);
-  }
-  
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    dispatch(setAccount(accounts[0]));
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -91,13 +95,10 @@ const [acc, setAcc] = React.useState("");
             onClick={EthereumButton}
             fullWidth
             variant="contained"
-            sx={{ mt: 1, mb: 2 }}
+            sx={{ mt: 1, mb: 2, bgcolor: "orange" }}
           >
             Connect with Metamask
           </Button>
-          <Typography component="h2" variant="h5" color="#263238">
-            Account: <span>{acc}</span>
-          </Typography>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
@@ -119,18 +120,29 @@ const [acc, setAcc] = React.useState("");
 const theme = createTheme();
 
 export default function SignIn() {
+  const account = useSelector((state) => state.account);
   const [open, setOpen] = React.useState(false);
+  const [connect, setConnect] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
   };
   const handleToggle = () => {
-    setOpen(!open);
+    if (!connect) {
+      setOpen(!open);
+    }
   };
+
+  React.useEffect(() => {
+    if (account.length > 0) {
+      setConnect(true);
+      handleClose();
+    }
+  }, [account]);
 
   return (
     <ThemeProvider theme={theme}>
       <Button variant="contained" sx={{ ml: 3 }} onClick={handleToggle}>
-        sign in
+        {connect ? "Connected" : "sign in"}
       </Button>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}

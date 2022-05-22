@@ -1,13 +1,23 @@
 const initState = {
-  open : false ,
-  connect : false ,
+  account: "",
+  pk: "",
 };
 
-const stateReducer = ( state = initState, action) => {
-    switch (action.type){
-        default:
-            return state;
-    }
+const stateReducer = (state = initState, action) => {
+  switch (action.type) {
+    case "setAccount":
+      return {
+        ...state,
+        account: action.payload,
+      };
+    case "setPk":
+      return {
+        ...state,
+        pk: action.payload,
+      };
+    default:
+      return state;
+  }
 };
 
-export default stateReducer ;
+export default stateReducer;

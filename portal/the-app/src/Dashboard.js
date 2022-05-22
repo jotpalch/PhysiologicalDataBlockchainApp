@@ -217,11 +217,6 @@ function DashboardContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const [wallet, setWallet] = React.useState(false);
-  const CheckWallect = () => {
-    console.log(window.ethereum.isConnected());
-    setWallet(window.ethereum.isConnected())
-  };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -260,9 +255,7 @@ function DashboardContent() {
               </Badge>
             </IconButton>
             {/* 登入 */}
-            <Box onClick={CheckWallect} sx={{ display: wallet ? "none" : "block" }}>
-              <SignIn />
-            </Box>
+            <SignIn />
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open} sx={{ height: "100vh" }}>
