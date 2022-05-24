@@ -27,15 +27,19 @@ export default function Chart(props) {
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:8877/${props.uri}/pxnzmzstX6FhoTl7A6ZUKnA2BGtSzs8R`)
+      .get(
+        `http://localhost:8877/api/03ptUOjiXcAe18SjU5pYIDcSiRcSIw9O/${props.uri}`
+      )
       .then((response) => {
+        
         setData(
           response.data.map((temp) =>
             createData(
-              new Date(temp.Time_Stamp.I * 1000).toLocaleTimeString("en-GB", {
-                hour: "2-digit",
-                minute: "2-digit",
-              }),
+              new Date(temp.Time_Stamp),
+              // new Date(temp.Time_Stamp).toLocaleTimeString("en-GB", {
+              //   hour: "2-digit",
+              //   minute: "2-digit",
+              // }),
               parseFloat(temp[props.class].toFixed(1))
             )
           )

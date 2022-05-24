@@ -23,6 +23,8 @@ import Deposits from "./Deposits";
 import Orders from "./Orders";
 
 import SignIn from "./Signin";
+import { useDispatch, useSelector } from "react-redux";
+import { TextField } from "@mui/material";
 
 function Copyright(props) {
   return (
@@ -127,11 +129,11 @@ const BgImg = () => {
 };
 
 const type = [
-  { uri: "beats", class: "Heart_Beats" },
-  { uri: "step", class: "Step_Counts" },
-  { uri: "blood_ox", class: "Blood_Oxygen" },
-  { uri: "blood_ps", class: "Blood_Pressure" },
-  { uri: "temp", class: "Body_Temperature" },
+  { uri: "Heart_Beats", class: "Heart_Beats" },
+  { uri: "Step_Counts", class: "Step_Counts" },
+  { uri: "Blood_Oxygen", class: "Blood_Oxygen" },
+  { uri: "Blood_Pressure", class: "Blood_Pressure" },
+  { uri: "Body_Temperature", class: "Body_Temperature" },
 ];
 
 const ShowChart = () => {
@@ -168,11 +170,13 @@ const DataVis = () => {
       }}
     >
       <Toolbar />
+
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
+          <TextField margin="normal" required fullWidth autoFocus />
           {/* Chart */}
           {ShowChart()}
-          <Grid item xs={12} md={8} lg={9}>
+          {/* <Grid item xs={12} md={8} lg={9}>
             <Paper
               sx={{
                 p: 2,
@@ -181,11 +185,11 @@ const DataVis = () => {
                 height: 240,
               }}
             >
-              <Chart {...{ uri: "beats", class: "Heart_Beats" }} />
+              <Chart {...{ uri: "Heart_Beats", class: "Heart_Beats" }} />
             </Paper>
-          </Grid>
+          </Grid> */}
           {/* Recent Deposits */}
-          <Grid item xs={12} md={4} lg={3}>
+          {/* <Grid item xs={12} md={4} lg={3}>
             <Paper
               sx={{
                 p: 2,
@@ -196,15 +200,15 @@ const DataVis = () => {
             >
               <Deposits />
             </Paper>
-          </Grid>
+          </Grid> */}
           {/* Recent Orders */}
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
               <Orders />
             </Paper>
-          </Grid>
+          </Grid> */}
         </Grid>
-        <Copyright sx={{ pt: 4 }} />
+        {/* <Copyright sx={{ pt: 4 }} /> */}
       </Container>
     </Box>
   );
@@ -213,11 +217,13 @@ const DataVis = () => {
 const mdTheme = createTheme();
 
 function DashboardContent() {
+  const account = useSelector((state) => state.account);
+
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
+  
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -250,7 +256,7 @@ function DashboardContent() {
               Physiological Data Blockchain App
             </Typography>
             <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={0} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -278,8 +284,7 @@ function DashboardContent() {
             {secondaryListItems}
           </List>
         </Drawer>
-        {/* <BgImg /> */}
-        <DataVis />
+        {account.length > 0 ? <DataVis /> : <BgImg />  }
       </Box>
     </ThemeProvider>
   );
