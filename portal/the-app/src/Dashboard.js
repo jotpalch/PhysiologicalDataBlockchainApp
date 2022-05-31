@@ -18,6 +18,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
+import { Button, FormControl } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
 import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
@@ -173,7 +177,34 @@ const DataVis = () => {
 
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={4}>
-          <TextField margin="normal" required fullWidth autoFocus />
+          <FormControl fullWidth>
+            <InputLabel htmlFor="outlined-adornment-password">
+              Input Your Public Key Here
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              label="Password"
+              margin="normal"
+              required
+              autoFocus
+              type="password"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    // onClick={handleClickShowPassword}
+                    // onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    <Button variant="contained" component="span">
+                      Bind
+                    </Button>
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+
           {/* Chart */}
           {ShowChart()}
           {/* <Grid item xs={12} md={8} lg={9}>
