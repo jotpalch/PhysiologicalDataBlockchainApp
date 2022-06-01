@@ -66,7 +66,7 @@ function create_request(name,pubkey,user_pubkey_list,collection_type,enterprise)
 
 //這裡要改成去鏈上check
 async function CheckDataInDB(id_list,collection_type){
-    const uri = "mongodb://admin:69251@ec2-34-221-6-169.us-west-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&serverSelectionTimeoutMS=2000&appname=mongosh%201.3.0&directConnection=true&ssl=false";
+    const uri = "mongodb://admin:69251@ec2-54-201-240-164.us-west-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&serverSelectionTimeoutMS=2000&appname=mongosh%201.3.0&directConnection=true&ssl=false";
     const client = new MongoClient(uri);
     try{
         await client.connect();
