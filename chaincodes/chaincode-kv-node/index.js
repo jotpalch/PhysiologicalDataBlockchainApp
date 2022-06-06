@@ -17,13 +17,16 @@ class KVContract extends Contract {
     if(exists){
       return{error: "The User Already Exists"};
     }*/
+    const ID = await ctx.stub.createCompositeKey(pubkey, [attribute]);
+    console.log(ID);
+
     const ACL = {
-      ID: pubkey,
+      ID: ID,
       Attribute: attribute,
       Provider: provider,
       Availability: availability
     }
-    await ctx.stub.putState(pubkey, Buffer.from(stringify(ACL)));
+    await ctx.stub.putState(ID, Buffer.from(stringify(ACL)));
     return { success:"OK"};
   }
 

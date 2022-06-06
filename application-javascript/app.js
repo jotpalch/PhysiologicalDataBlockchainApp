@@ -73,7 +73,7 @@ async function main() {
 	try {
 		// build an in memory object with the network configuration (also known as a connection profile)
 		const ccp = buildCCPOrg1();
-		console.log(ccp);
+//		console.log(ccp);
 		// build an instance of the fabric ca services client based on
 		// the information in the network configuration
 		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
@@ -128,28 +128,41 @@ async function main() {
 			// This will be sent to both peers and if both peers endorse the transaction, the endorsed proposal will be sent
 			// to the orderer to be committed by each of the peer's to the channel ledger.*/
 			console.log('\n--> Submit Transaction: CreateACL, creates new ACL with ID, attribute, provider, and availability arguments');
-			let result = await contract.submitTransaction('KVContract:CreateACL', 'dv234re', 'blood_oxygen', 'apple',  '1');
+			const result = await contract.submitTransaction('KVContract:CreateACL', 'dv234re', 'stepcount', 'apple',  '1');
 
 			console.log('*** Result: committed');
 			if (`${result}` !== '') {
 				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 			}
 
-			console.log('\n--> Evaluate Transaction: ReadACL, function returns an access control list with a given pubkey and attribute');
-			result = await contract.evaluateTransaction('KVContract:ReadACL', 'dv234re');
-			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
+			                        console.log('\n--> Submit Transaction: CreateACL, creates new ACL with ID, attribute, provider, and availability arguments');
+                        const result_3 = await contract.submitTransaction('KVContract:CreateACL', 'dv234re', 'blood_pressure', 'google',  '1');
+                        console.log('*** Result: committed');
+                        if (`${result_3}` !== '') {
+                                console.log(`*** Result: ${prettyJSONString(result_3.toString())}`);
+                        }
 
-			console.log('\n--> Evaluate Transaction: PubkeyExists, function returns "true" if an ACL with given pubkey and attribution exist');
-			result = await contract.evaluateTransaction('KVContract:PubkeyExists', 'dv234re');
-			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
+			console.log('\n--> Evaluate Transaction: ReadACL, function returns an access control list with a given pubkey and attribute');
+			let result_2 = await contract.evaluateTransaction('KVContract:ReadACL', 'dv234re','stepcount');
+			console.log(`*** Result: ${prettyJSONString(result_2.toString())}`);
+
+/*			console.log('\n--> Evaluate Transaction: PubkeyExists, function returns "true" if an ACL with given pubkey and attribution exist');
+			result_2 = await contract.evaluateTransaction('KVContract:ReadACL', 'dv234re',' stepcount');
+			console.log(`*** Result: ${result2}`);*/
 
 			console.log('\n--> Submit Transaction: UpdateACL, change the availability');
 			await contract.submitTransaction('KVContract:UpdateACL', 'dv234re', 'stepcount', 'apple', '0');
 			console.log('*** Result: committed');
 
 			console.log('\n--> Evaluate Transaction: ReadACL, function returns the ACL of given pubkey and attributes');
-			result = await contract.evaluateTransaction('ReadACL', 'dv234re');
-			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
+			result_2 = await contract.evaluateTransaction('ReadACL', 'dv234re','stepcount');
+			console.log(`*** Result: ${prettyJSONString(result_2.toString())}`);
+
+
+                        console.log('\n--> Evaluate Transaction: ReadACL, function returns the ACL of given pubkey and attributes');
+                        result_2 = await contract.evaluateTransaction('ReadACL', 'dv234re','blood_pressure');
+                        console.log(`*** Result: ${prettyJSONString(result_2.toString())}`);
+
 
 
 		} finally {
