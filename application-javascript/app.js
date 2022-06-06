@@ -155,14 +155,17 @@ async function main() {
 			console.log('*** Result: committed');
 
 			console.log('\n--> Evaluate Transaction: ReadACL, function returns the ACL of given pubkey and attributes');
-			result_2 = await contract.evaluateTransaction('ReadACL', 'dv234re','stepcount');
+			result_2 = await contract.evaluateTransaction('KVContract:ReadACL', 'dv234re','stepcount');
 			console.log(`*** Result: ${prettyJSONString(result_2.toString())}`);
 
 
                         console.log('\n--> Evaluate Transaction: ReadACL, function returns the ACL of given pubkey and attributes');
-                        result_2 = await contract.evaluateTransaction('ReadACL', 'dv234re','blood_pressure');
-                        console.log(`*** Result: ${prettyJSONString(result_2.toString())}`);
-
+                        result_2 = await contract.evaluateTransaction('KVContract:ReadACL', 'dv234re','blood_pressure');
+                        console.log(`*** Result: ${prettyJSONString(result_2.toString())}`);			                        
+			console.log('\n--> Evaluate Transaction: GetAllAssets, function returns all the current assets on the ledger');
+                        const resul_2 = await contract.evaluateTransaction('KVContract:GetAllACL');
+                        //console.log(`*** Result: ${prettyJSONString(result_2.toString())}`);
+			console.log(resul_2);
 
 
 		} finally {
