@@ -12,19 +12,19 @@ app.get("/form",function(req,res){                          //Data requester輸�
 });
 
 app.post('/request',urlencodedParser,async function(req, res) {   
-    let newmem = create_request(req.body.name,req.body.pubkey,req.body.user_pubkey_list,req.body.collection_type,req.body.enterprise)
+    let newmem = create_request(req.body.name,req.body.pubkey,req.body.user_pubkey_list,req.body.collection_type,req.body.provider)
     let collect_detail = newmem.collection_type;
     let pubkey = newmem.pubkey;
     let user_pubkey_list = newmem.user_pubkey_list;
-    let enterprise = newmem.enterprise;
+    let provider = newmem.provider;
     collect_detail_f = collect_detail.split(",");
     user_pubkey_list_f = user_pubkey_list.split(",");
     var dataindb = new Array();
     //需改成check ACL
     for(var i = 0;i<collect_detail_f.length;++i){
-        dataindb[i] = await CheckDataInDB(newmem.pubkey,collect_detail_f[i]);
+        dataindb[i] = await CheckDataInDB(pubkey,collect_detail_f[i]);
     }
-    //
+    
     let checker = arr => arr.every(v => v === true);
     if(checker(dataindb)){
         var token = create_jwt(collect_detail_f,pubkey);
@@ -49,24 +49,24 @@ app.listen(3000,function(){
 });
 
 class request_message{
-    constructor(name,pubkey,user_pubkey_list,collection_type,enterprise){
+    constructor(name,pubkey,user_pubkey_list,collection_type,provider){
         this.name = name;
         this.pubkey = pubkey;
         this.user_pubkey_list = user_pubkey_list;
         this.collection_type = collection_type;
-        this.enterprise = enterprise;
+        this.provider = provider;
     }
 
 }
 
-function create_request(name,pubkey,user_pubkey_list,collection_type,enterprise){
-    var a = new request_message(name,pubkey,user_pubkey_list,collection_type,enterprise);
+function create_request(name,pubkey,user_pubkey_list,collection_type,provider){
+    var a = new request_message(name,pubkey,user_pubkey_list,collection_type,provider);
     return a;
 }
 
 //這裡要改成去鏈上check
 async function CheckDataInDB(id_list,collection_type){
-    const uri = "mongodb://admin:69251@ec2-54-201-240-164.us-west-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&serverSelectionTimeoutMS=2000&appname=mongosh%201.3.0&directConnection=true&ssl=false";
+    const uri = "mongodb://admin:69251@ec2-54-191-160-29.us-west-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&serverSelectionTimeoutMS=2000&appname=mongosh%201.3.0&directConnection=true&ssl=false";
     const client = new MongoClient(uri);
     try{
         await client.connect();
