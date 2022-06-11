@@ -1,13 +1,15 @@
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 'use strict';
 
-// const { Gateway, Wallets } = require('fabric-network');
-// const FabricCAServices = require('fabric-ca-client');
-
+const { Gateway, Wallets } = require('fabric-network');
+const FabricCAServices = require('fabric-ca-client');
+const path = require('path');
+const { buildCCPOrg1, buildWallet } = require('../test-application/javascript/AppUtil.js');
 const { is } = require('express/lib/request');
 const { type } = require('express/lib/response');
 const { MongoClient } = require("mongodb");
 const express = require("express");
+
 const app = express();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });

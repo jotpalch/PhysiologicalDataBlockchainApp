@@ -1,7 +1,13 @@
-# 檔案名稱 .gitignore
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
-*.exe
-/node_modules
+# Coverage directory used by tools like istanbul
+coverage
+
+# Dependency directories
+node_modules/
 package-lock.json
-# 當然你要忽略自己也可以，只是通常不會這麼做
-# .gitignore
+
+wallet
+!wallet/.gitkeep
