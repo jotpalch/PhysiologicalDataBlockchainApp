@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 'use strict';
 
-const { Gateway, Wallets } = require('fabric-network');
-const FabricCAServices = require('fabric-ca-client');
+// const { Gateway, Wallets } = require('fabric-network');
+// const FabricCAServices = require('fabric-ca-client');
 
 const { is } = require('express/lib/request');
 const { type } = require('express/lib/response');
