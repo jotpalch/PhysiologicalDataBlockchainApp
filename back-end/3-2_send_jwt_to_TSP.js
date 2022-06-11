@@ -1,4 +1,9 @@
 const jwt = require('jsonwebtoken');
+'use strict';
+
+const { Gateway, Wallets } = require('fabric-network');
+const FabricCAServices = require('fabric-ca-client');
+
 const { is } = require('express/lib/request');
 const { type } = require('express/lib/response');
 const { MongoClient } = require("mongodb");
@@ -19,14 +24,14 @@ app.post('/request',urlencodedParser,async function(req, res) {
     let provider = newmem.provider;
     collect_detail_f = collect_detail.split(",");
     user_pubkey_list_f = user_pubkey_list.split(",");
-    var dataindb = new Array();
+    var data_available = new Array();
     //需改成check ACL
     for(var i = 0;i<collect_detail_f.length;++i){
-        dataindb[i] = await CheckDataInDB(pubkey,collect_detail_f[i]);
+        data_available[i] = await Check_ACL_On_Chain(pubkey,collect_detail_f[i],provider);
     }
     
     let checker = arr => arr.every(v => v === true);
-    if(checker(dataindb)){
+    if(checker(data_available)){
         var token = create_jwt(collect_detail_f,pubkey);
         res.send('<p id = "copy">' + token + '</p>' +  '<button type="button" onclick="copyEvent(`copy`)">Copy</button>' + 
         '<script>' + 
@@ -65,7 +70,8 @@ function create_request(name,pubkey,user_pubkey_list,collection_type,provider){
 }
 
 //這裡要改成去鏈上check
-async function CheckDataInDB(id_list,collection_type){
+async function Check_ACL_On_Chain(id_list,collection_type){
+
     const uri = "mongodb://admin:69251@ec2-54-191-160-29.us-west-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&serverSelectionTimeoutMS=2000&appname=mongosh%201.3.0&directConnection=true&ssl=false";
     const client = new MongoClient(uri);
     try{
