@@ -135,12 +135,12 @@ async function main() {
 				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 			}
 
-			                        console.log('\n--> Submit Transaction: CreateACL, creates new ACL with ID, attribute, provider, and availability arguments');
-                        const result_3 = await contract.submitTransaction('KVContract:CreateACL', 'dv234re', 'blood_pressure', 'google',  '1');
-                        console.log('*** Result: committed');
-                        if (`${result_3}` !== '') {
-                                console.log(`*** Result: ${prettyJSONString(result_3.toString())}`);
-                        }
+			console.log('\n--> Submit Transaction: CreateACL, creates new ACL with ID, attribute, provider, and availability arguments');
+			const result_3 = await contract.submitTransaction('KVContract:CreateACL', 'dv234re', 'blood_pressure', 'google',  '1');
+			console.log('*** Result: committed');
+			if (`${result_3}` !== '') {
+					console.log(`*** Result: ${prettyJSONString(result_3.toString())}`);
+			}
 
 			console.log('\n--> Evaluate Transaction: ReadACL, function returns an access control list with a given pubkey and attribute');
 			let result_2 = await contract.evaluateTransaction('KVContract:ReadACL', 'dv234re','stepcount');
@@ -159,9 +159,9 @@ async function main() {
 			console.log(`*** Result: ${prettyJSONString(result_2.toString())}`);
 
 
-                        console.log('\n--> Evaluate Transaction: ReadACL, function returns the ACL of given pubkey and attributes');
-                        result_2 = await contract.evaluateTransaction('KVContract:ReadACL', 'dv234re','blood_pressure');
-                        console.log(`*** Result: ${prettyJSONString(result_2.toString())}`);			                        
+			console.log('\n--> Evaluate Transaction: ReadACL, function returns the ACL of given pubkey and attributes');
+			result_2 = await contract.evaluateTransaction('KVContract:ReadACL', 'dv234re','blood_pressure');
+			console.log(`*** Result: ${prettyJSONString(result_2.toString())}`);			                        
 			console.log('\n--> Evaluate Transaction: GetAllAssets, function returns all the current assets on the ledger');
                         //const resul_2 = await contract.evaluateTransaction('KVContract:GetAllACL');
                         //console.log(`*** Result: ${prettyJSONString(result_2.toString())}`);

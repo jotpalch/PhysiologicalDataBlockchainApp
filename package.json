@@ -17,6 +17,12 @@
   },
   "homepage": "https://github.com/jotpalch/PhysiologicalDataBlockchainApp#readme",
   "dependencies": {
-    "express": "^4.18.1"
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "fabric-ca-client": "^2.2.13",
+    "fabric-network": "^2.2.13",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.7.0",
+    "path": "^0.12.7"
   }
 }
