@@ -1,6 +1,7 @@
 const initState = {
   account: "",
   pk: "",
+  providers: [],
 };
 
 const stateReducer = (state = initState, action) => {
@@ -14,6 +15,11 @@ const stateReducer = (state = initState, action) => {
       return {
         ...state,
         pk: action.payload,
+      };
+    case "setProvider":
+      return {
+        ...state,
+        providers: action.payload,
       };
     default:
       return state;

@@ -18,3 +18,10 @@ export const setPk = (pk) => {
     payload: pk,
   };
 };
+
+export const setProvider = (providers) => {
+  return {
+    type: "setProvider",
+    payload: providers,
+  };
+};
