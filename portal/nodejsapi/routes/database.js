@@ -3,7 +3,7 @@ var router = express.Router();
 
 const mongo = require("mongodb").MongoClient;
 const url =
-  "mongodb://admin:69251@ec2-54-201-240-164.us-west-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&serverSelectionTimeoutMS=2000&appname=mongosh%201.3.0&directConnection=true&ssl=false";
+  "mongodb://admin:69251@ec2-54-191-160-29.us-west-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&serverSelectionTimeoutMS=2000&appname=mongosh%201.3.0&directConnection=true&ssl=false";
 let db = null;
 let data = null ;
 
@@ -29,7 +29,7 @@ router.get("/provider", async (req, res) => {
   console.log(req.params.publickey);
   const col = data.collection("Providers");
   const result = await col.find({}).toArray();
-  res.status(200).send(result).end();
+  res.status(200).send(result[0]['list']).end();
 });
 
 router.get("/:publickey", async (req, res) => {
