@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>form</title>
+	<style>
+		h2 { text-align: center; }
+		div { width: 400px; margin: 10px auto; }
+		label{ width: 100%; display: inline-block; }
+		input, textarea{ width: 100%; display: inline-block; }
+		select{height: 102% ;width: 102%;}
+		#send{ margin: 40px auto 0 auto; display: block; width: 50px; }
+	</style>
+</head>
+<body>
+	<h2>TSP:Data Request-3</h2>
+	<form id="signup" method="POST" action="http://172.26.156.240:3000/data">
+		<div><label for="name">TSP單位名稱:</label><input type="text" name="name" id="name"></div>
+		<div><label for="pubkey">TSP公鑰:</label><input type="text" name="pubkey" id="pubkey"></div>
+        <div><label for="jwt">Json Web Token:</label><input type="text" name="jwt" id="jwt"></div>
+		<div><select name="provider">
+			<option value=""selected>索取資料之廠商</option>
+			<option value="Apple">Apple</option>
+			<option value="Google">Google</option>
+			<option value="Garmin">Garmin</option>
+			<option value="idk">idk</option>
+		</select></div>
+		<input id="send" type="submit" value="送出">
+	</form>
+</body>
+</html>
