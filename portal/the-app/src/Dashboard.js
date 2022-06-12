@@ -9,14 +9,11 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
 import { Button, FormControl } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
@@ -24,37 +21,14 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-
 import Chart from "./Chart";
-import Deposits from "./Deposits";
-import Orders from "./Orders";
 
 import SignIn from "./Signin";
 import { useDispatch, useSelector } from "react-redux";
 import { setAccount, setPk } from "./store";
-import { TextField } from "@mui/material";
-import { createBox } from "@mui/system";
-import { yellow } from "@mui/material/colors";
+
 import axios from "axios";
 import { Slider } from "@mui/material";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const drawerWidth = 240;
 
@@ -146,50 +120,48 @@ var type = [
   { uri: "Blood_Oxygen", class: "Blood_Oxygen" },
   { uri: "Blood_Pressure", class: "Blood_Pressure" },
   { uri: "Body_Temperature", class: "Body_Temperature" },
-]; 
+];
 
 const ShowChart = (props) => {
-  if (props.pro == "APPLE") {
+  if (props.pro === "APPLE") {
     type = [
       { uri: "Heart_Beats", class: "Heart_Beats" },
       { uri: "Step_Counts", class: "Step_Counts" },
       { uri: "Blood_Oxygen", class: "Blood_Oxygen" },
     ];
-  } else if (props.pro == "GOOGLE") {
+  } else if (props.pro === "GOOGLE") {
     type = [
       { uri: "Blood_Pressure", class: "Blood_Pressure" },
       { uri: "Body_Temperature", class: "Body_Temperature" },
     ];
-  } 
-  else if (props.pro == "GARMIN") {
+  } else if (props.pro === "GARMIN") {
     type = [
       { uri: "Heart_Beats", class: "Heart_Beats" },
       { uri: "Step_Counts", class: "Step_Counts" },
       { uri: "Body_Temperature", class: "Body_Temperature" },
     ];
   }
-    return type.map((t) => (
-      <Grid item xs={12}>
-        <Paper
-          sx={{
-            p: 3,
-            display: "flex",
-            flexDirection: "column",
-            borderRadius: 10,
-            boxShadow: 5,
-            height: 240,
-          }}
-        >
-          <Chart span={props.span} {...t} pro={props.pro} />
-        </Paper>
-      </Grid>
-    ));
+  return type.map((t) => (
+    <Grid item xs={12}>
+      <Paper
+        sx={{
+          p: 3,
+          display: "flex",
+          flexDirection: "column",
+          borderRadius: 10,
+          boxShadow: 5,
+          height: 240,
+        }}
+      >
+        <Chart span={props.span} {...t} pro={props.pro} />
+      </Paper>
+    </Grid>
+  ));
 };
 
 const PKform = () => {
   const dispatch = useDispatch();
   const account = useSelector((state) => state.account);
-  const pk = useSelector((state) => state.pk);
   const [pkState, setPkState] = React.useState("");
 
   React.useEffect(() => {
@@ -294,12 +266,8 @@ const DataVis = () => {
   const [pro, setPro] = React.useState(providers[0]);
 
   const mapList = () => {
-    return providers.map((p) => (
-      <MenuItem value={p}>{p}</MenuItem>
-    ));
+    return providers.map((p) => <MenuItem value={p}>{p}</MenuItem>);
   };
-
-  
 
   const handleChange = (e, v) => {
     setSpan(v);
@@ -378,7 +346,7 @@ function DashboardContent() {
 
   const CheckAccount = () => {
     console.log("check");
-    if (window.ethereum.selectedAddress != undefined) {
+    if (window.ethereum.selectedAddress !== undefined) {
       dispatch(setAccount(window.ethereum.selectedAddress));
     }
   };

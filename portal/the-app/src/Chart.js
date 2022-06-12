@@ -12,8 +12,7 @@ import {
 import Title from "./Title";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Skeleton from "@mui/material/Skeleton";
-import { Container, Typography, Box } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
 // Generate Sales Data
@@ -82,7 +81,7 @@ export default function Chart(props) {
     <React.Fragment>
       <Container sx={{ display: "flex", justifyContent: "space-between" }}>
         <Title>{props.class.replace("_", " ")}</Title>
-        <Title sx={{ color: "yellow"}}> {props.pro}</Title>
+        <Title sx={{ color: "yellow" }}> {props.pro}</Title>
       </Container>
 
       <ResponsiveContainer>
