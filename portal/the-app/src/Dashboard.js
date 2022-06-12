@@ -140,32 +140,50 @@ const BgImg = () => {
   );
 };
 
-const type = [
+var type = [
   { uri: "Heart_Beats", class: "Heart_Beats" },
   { uri: "Step_Counts", class: "Step_Counts" },
   { uri: "Blood_Oxygen", class: "Blood_Oxygen" },
   { uri: "Blood_Pressure", class: "Blood_Pressure" },
   { uri: "Body_Temperature", class: "Body_Temperature" },
-];
+]; 
 
 const ShowChart = (props) => {
-
-  return type.map((t) => (
-    <Grid item xs={12}>
-      <Paper
-        sx={{
-          p: 3,
-          display: "flex",
-          flexDirection: "column",
-          borderRadius: 10,
-          boxShadow: 5,
-          height: 240,
-        }}
-      >
-        <Chart span={props.span} {...t} pro={props.pro} />
-      </Paper>
-    </Grid>
-  ));
+  if (props.pro == "APPLE") {
+    type = [
+      { uri: "Heart_Beats", class: "Heart_Beats" },
+      { uri: "Step_Counts", class: "Step_Counts" },
+      { uri: "Blood_Oxygen", class: "Blood_Oxygen" },
+    ];
+  } else if (props.pro == "GOOGLE") {
+    type = [
+      { uri: "Blood_Pressure", class: "Blood_Pressure" },
+      { uri: "Body_Temperature", class: "Body_Temperature" },
+    ];
+  } 
+  else if (props.pro == "GARMIN") {
+    type = [
+      { uri: "Heart_Beats", class: "Heart_Beats" },
+      { uri: "Step_Counts", class: "Step_Counts" },
+      { uri: "Body_Temperature", class: "Body_Temperature" },
+    ];
+  }
+    return type.map((t) => (
+      <Grid item xs={12}>
+        <Paper
+          sx={{
+            p: 3,
+            display: "flex",
+            flexDirection: "column",
+            borderRadius: 10,
+            boxShadow: 5,
+            height: 240,
+          }}
+        >
+          <Chart span={props.span} {...t} pro={props.pro} />
+        </Paper>
+      </Grid>
+    ));
 };
 
 const PKform = () => {

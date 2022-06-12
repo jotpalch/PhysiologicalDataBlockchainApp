@@ -22,11 +22,10 @@ function createData(time, value) {
 }
 
 export default function Chart(props) {
-  console.log(props);
   const theme = useTheme();
   const pk = useSelector((state) => state.pk);
 
-  const [data, setData] = React.useState();
+  const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
