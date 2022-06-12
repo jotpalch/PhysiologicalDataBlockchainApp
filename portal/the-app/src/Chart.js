@@ -11,7 +11,10 @@ import {
 } from "recharts";
 import Title from "./Title";
 import axios from "axios";
-
+import { useSelector } from "react-redux";
+import Skeleton from "@mui/material/Skeleton";
+import { Container, Typography, Box } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // Generate Sales Data
 function createData(time, value) {
@@ -19,43 +22,70 @@ function createData(time, value) {
 }
 
 export default function Chart(props) {
+  console.log(props);
   const theme = useTheme();
+  const pk = useSelector((state) => state.pk);
 
   const [data, setData] = React.useState();
   const [isLoading, setLoading] = React.useState(true);
 
-
   React.useEffect(() => {
+    setLoading(true);
     axios
-      .get(
-        `http://localhost:8877/api/03ptUOjiXcAe18SjU5pYIDcSiRcSIw9O/${props.uri}`
-      )
+      .get(`http://localhost:8877/api/${pk}/${props.pro}/${props.uri}`)
       .then((response) => {
-        
         setData(
-          response.data.map((temp) =>
-            createData(
-              new Date(temp.Time_Stamp),
-              // new Date(temp.Time_Stamp).toLocaleTimeString("en-GB", {
-              //   hour: "2-digit",
-              //   minute: "2-digit",
-              // }),
-              parseFloat(temp[props.class].toFixed(1))
+          response.data
+            .filter((temp) => {
+              var now = new Date();
+              var offset = now.setDate(now.getDate() - props.span);
+              return (
+                new Date(temp.Time_Stamp) > offset &&
+                new Date(temp.Time_Stamp) <= new Date()
+              );
+            })
+            .map((temp) =>
+              createData(
+                // new Date(temp.Time_Stamp),
+                new Date(temp.Time_Stamp).toLocaleString("en-US", {
+                  hour12: false,
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }),
+                // new Date(temp.Time_Stamp).toLocaleString("en-US"),
+                parseFloat(temp[props.class].toFixed(1))
+              )
             )
-          )
         );
         setLoading(false);
       });
-  }, []);
+  }, [pk, props.span, props.pro]);
   // UseEffect的後面的 [] 用來控制上面的get只跑一次
 
-  if(isLoading) {
-    return <h2> loading... </h2>
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
     <React.Fragment>
-      <Title>{props.class.replace("_"," ")}</Title>
+      <Container sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Title>{props.class.replace("_", " ")}</Title>
+        <Title sx={{ color: "yellow"}}> {props.pro}</Title>
+      </Container>
+
       <ResponsiveContainer>
         <LineChart
           data={data}
@@ -70,7 +100,7 @@ export default function Chart(props) {
             dataKey="time"
             stroke={theme.palette.text.secondary}
             style={theme.typography.body2}
-            interval={23}
+            interval={props.span * 80}
           />
           <YAxis
             stroke={theme.palette.text.secondary}
