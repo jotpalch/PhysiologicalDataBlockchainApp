@@ -29,7 +29,7 @@
 ![](https://i.imgur.com/zX4IrKF.png)
 	圖(二) 資料庫內資料存放狀態(ID為公鑰)
 
-	我區塊鏈中的分散式帳本用來存放ACL，App帳號綁定MetaMask。
+區塊鏈中的分散式帳本用來存放ACL，App帳號綁定MetaMask。
 MetaMask是當前最火紅的軟體加密貨幣錢包。允許使用者通過瀏覽器擴充程式或App存取以太坊錢包，然後與去中心化應用程式進行互動。
 
 圖(三) MetaMask瀏覽器擴充應用程式
